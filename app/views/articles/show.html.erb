@@ -1,0 +1,4 @@
+<h1> <%= @article.title, class: 'article_title' %> </h1>
+
+<p> <%= raw @article.body, class: 'article_body' %> </p>
+<%= link_to "Articles List", articles_path %>
