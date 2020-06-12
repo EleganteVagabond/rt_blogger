@@ -1,0 +1,24 @@
+<%= form_for(@article) do |f| %>
+  <!-- print any error message for the user !-->
+  <ul>
+      <% @article.errors.full_messages.each do |emsg| %>
+      <li> <%= emsg %> </li>
+      <% end %>
+  </ul>
+
+  <div class="input">
+  <p>
+      <%= f.label :title %> <br/>
+      <%= f.text_field :title %>
+  </p>
+  <p>
+      <%= f.label :body %> <br/>
+      <%= f.text_area :body %>
+  </p>
+  <p>
+      <%= f.submit %>
+  </p>
+  </div>
+
+
+<% end %>
