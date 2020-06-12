@@ -1,6 +1,9 @@
 <h1 class='article_title' > <%= @article.title %> </h1>
 
 <div class='article_body'>
+<% if @article.image.attached? %>
+<p><%= image_tag url_for(@article.image) %> </p>
+<% end %>
 <h2><p> <%= raw @article.body %> </p></h2>
 </div>
 <p>Tagged with: <%= "no tags :(" if @article.tags.empty? %> 
