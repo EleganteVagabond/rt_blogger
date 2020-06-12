@@ -1,7 +1,13 @@
 <h1 class='article_title' > <%= @article.title %> </h1>
 
 <div class='article_body'>
-<p > <%= raw @article.body %> </p>
+<h2><p> <%= raw @article.body %> </p></h2>
+</div>
+
+<div class="article_comments">
+  <h3>Comments <%= "(#{@article.comments.size})" unless @article.comments.empty? %></h3>
+  <%= 'No Comments (yet?)' if @article.comments.empty? %>
+  <%= render partial: 'articles/comment', collection: @article.comments %>
 </div>
 
 <div class="actions">
@@ -12,4 +18,5 @@
 
 </div>
 
+<%= render partial: 'comments/form' %>
 <%= link_to "Articles List", articles_path %>

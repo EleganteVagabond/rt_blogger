@@ -7,6 +7,10 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    # add a stub for a comment
+    @comment = Comment.new
+    # don't add to the Article.comments collection because that will trigger a save/insert
+    @comment.article = @article
   end
 
   def new
