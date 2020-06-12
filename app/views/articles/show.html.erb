@@ -3,6 +3,10 @@
 <div class='article_body'>
 <h2><p> <%= raw @article.body %> </p></h2>
 </div>
+<p>Tagged with: <%= "no tags :(" if @article.tags.empty? %> 
+  <% @article.tags.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag) %>
+  <% end  unless @article.tags.empty? %> </p>
 
 <div class="article_comments">
   <h3>Comments <%= "(#{@article.comments.size})" unless @article.comments.empty? %></h3>

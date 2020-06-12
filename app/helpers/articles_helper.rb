@@ -4,7 +4,7 @@ module ArticlesHelper
   # to use in the ArticleController be sure to include this module!
   private
   def article_params
-    params.require(:article).permit(:title,:body)
+    params.require(:article).permit(:title,:body, :tag_list)
   end
 
 end

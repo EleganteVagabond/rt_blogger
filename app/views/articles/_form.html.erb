@@ -16,6 +16,11 @@
       <%= f.text_area :body %>
   </p>
   <p>
+        <%= f.label :tag_list %> <br/>
+        <!-- tag list is a custom method in the Article model --!>
+        <%= f.text_field :tag_list %> 
+  </p>
+  <p>
       <%= f.submit %>
   </p>
   </div>
