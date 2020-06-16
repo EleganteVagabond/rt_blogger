@@ -7,7 +7,6 @@ class Article < ApplicationRecord
   # tell ActiveStorage that this object has images attached to it
   has_one_attached :image
   # specify which attachments are valid (could include other image types)
-  # validates_attachment_content_type :image, :content_type => ['image/jpg', 'image/jpeg', 'image/png']
   validates :image, content_type:  ['image/jpg', 'image/jpeg', 'image/png']
 
   def tag_list

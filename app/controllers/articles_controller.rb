@@ -1,6 +1,14 @@
 class ArticlesController < ApplicationController
+  
+  # I'm not sure what the difference is between these two. 
+  # It doesn't seem to find the require_params method if I don't use include but the docs say the helper convention is the right way to go :/
   helper ArticlesHelper
   include ArticlesHelper
+
+  # these are the same but one is explicit about which methods require login and the other only says which don't
+  # I think I prefer the except so if anything is added it is automatically included/secured
+  #before_action :require_login, only: [:new,:create,:edit,:update,:destroy]
+  before_action :require_login, except: [:index, :show]
   
   def index
     @articles = Article.all
@@ -33,7 +41,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.delete
     @article.save
-    flash.notice= "Article '#{@article.title}' deleted :'( Fare thee well article '"
+    flash.success= "Article '#{@article.title}' deleted :'( Fare thee well article '"
 
     redirect_to article_path
   end

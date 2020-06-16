@@ -1,11 +1,12 @@
 <h1 class='article_title' > <%= @article.title %> </h1>
 
 <div class='article_body'>
-<% if @article.image.attached? %>
-<p><%= image_tag url_for(@article.image) %> </p>
-<% end %>
-<h2><p> <%= raw @article.body %> </p></h2>
+  <% if @article.image.attached? %>
+  <p><%= image_tag url_for(@article.image) %> </p>
+  <% end %>
+  <h2><p> <%= raw @article.body %> </p></h2>
 </div>
+
 <p>Tagged with: <%= "no tags :(" if @article.tags.empty? %> 
   <% @article.tags.each do |tag| %>
     <%= link_to tag.name, tag_path(tag) %>
@@ -17,13 +18,15 @@
   <%= render partial: 'articles/comment', collection: @article.comments %>
 </div>
 
-<div class="actions">
-<p><%= link_to "Delete this article", article_path(@article), class: 'delete_link', method: :delete, 
-  data: {confirm: "Really delete the article?"} %> </p>
+<% if logged_in? %>
+  <div class="actions">
+    <p><%= link_to "Delete this article", article_path(@article), class: 'delete_link', method: :delete, 
+      data: {confirm: "Really delete the article?"} %> </p>
 
-<p><%= link_to "Edit this article", edit_article_path(@article), class: 'edit_link' %> </p>
+    <p><%= link_to "Edit this article", edit_article_path(@article), class: 'edit_link' %> </p>
 
-</div>
+  </div>
+<% end %>
 
 <%= render partial: 'comments/form' %>
 <%= link_to "Articles List", articles_path %>
