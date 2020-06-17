@@ -1,0 +1,21 @@
+<h1>All Articles</h1>
+
+
+<% @article_by_year_hash.each do |year_key,year_hash| %>
+  <h2> <%= year_key %> </h2>
+  <ul id="articles">
+    <% year_hash.each do |month_key,month_arr| %>
+      <li> <h3> <%= link_to Date::MONTHNAMES[month_key], articles_by_month_path(:month_id=>month_key) %> <h3> </li>
+        <li> 
+          <ul class="nested">
+            <% month_arr.each do |article| %>
+              <li>
+                <%= render partial: 'articles/article_link', locals: {:article => article} %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+    <% end %>
+<% end %>
+</ul>
+<%= link_to "Create new Article", new_article_path, class: 'new_article'%>

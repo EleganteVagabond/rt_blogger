@@ -1,0 +1,9 @@
+<h1>Articles for <%= Date::MONTHNAMES[params[:month_id].to_i]%> </h1>
+<% @articles.each do |article| %>
+  <ul id="articles">
+      <li>  
+        <%= render partial: 'articles/article_link', locals: {:article => article} %>
+      </li>
+  </ul>
+<% end %>
+<%= link_to "Create new Article", new_article_path, class: 'new_article'%>

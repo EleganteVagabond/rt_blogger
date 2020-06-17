@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_203357) do
+ActiveRecord::Schema.define(version: 2020_06_17_123902) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(version: 2020_06_12_203357) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "author_id", null: false
+    t.integer "click_count", default: 0
+    t.index ["author_id"], name: "index_articles_on_author_id"
   end
 
   create_table "authors", force: :cascade do |t|
@@ -77,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_06_12_203357) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "articles", "authors"
   add_foreign_key "comments", "articles"
   add_foreign_key "taggings", "articles"
   add_foreign_key "taggings", "tags"

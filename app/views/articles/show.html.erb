@@ -1,5 +1,9 @@
 <h1 class='article_title' > <%= @article.title %> </h1>
 
+<h2 class='article_author'> 
+  Written by <%= @article.author.nickname %>
+</h2>
+
 <div class='article_body'>
   <% if @article.image.attached? %>
   <p><%= image_tag url_for(@article.image) %> </p>
@@ -18,7 +22,7 @@
   <%= render partial: 'articles/comment', collection: @article.comments %>
 </div>
 
-<% if logged_in? %>
+<% if logged_in? && current_user==@article.author %>
   <div class="actions">
     <p><%= link_to "Delete this article", article_path(@article), class: 'delete_link', method: :delete, 
       data: {confirm: "Really delete the article?"} %> </p>

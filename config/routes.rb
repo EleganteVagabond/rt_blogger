@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+
   resources :tags  
 
   resources :authors
@@ -14,4 +15,6 @@ Rails.application.routes.draw do
 
   get 'login' => 'author_sessions#new'
   get 'logout' => 'author_sessions#destroy'
+  get 'articles_by_date', to: 'articles#index_by_date', as: :articles_by_date
+  get 'articles_by_month' => 'articles#index_by_month'
 end

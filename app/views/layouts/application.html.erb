@@ -10,17 +10,40 @@
   </head>
 
   <body>
-    <p class="flash"> <%= flash.notice %> </p>
-    <%= yield %>
-    <hr/>
-      <h6>
-      <% if logged_in? %>
-        <%= "Hi! #{current_user.nickname}. You are logged in as #{current_user.username} "%>
-        <%= link_to '(logout)', logout_path %>
-      <% else %>
-        <%= "Not logged in" %>
-        <%= link_to '(login)', login_path %>
-      <% end %>
-      </h6>
+    <div id="container">
+      <div id="sidebar">
+        <div id="navigation">
+          <%= link_to "Articles", articles_path %>
+          <%= link_to "Articles by date", articles_by_date_path %>
+          <%= link_to "Tags", tags_path %>
+          <p/>
+          Top 3 articles
+          <% Article.most_popular.each do |art| %>
+            <%= render partial: 'articles/article_link', locals: {:article => art} %>
+          <% end %>
+        </div>
+        <div id="auth">
+        <h6>
+          <% if logged_in? %>
+            <%= "Hi! #{current_user.nickname}. You are logged in as #{current_user.username} "%>
+            <%= link_to '(logout)', logout_path %>
+          <% else %>
+            <%= "Not logged in" %>
+            <%= link_to '(login)', login_path %>
+          <% end %>
+        </h6>
+        </div>
+      </div>
+      <div id="content">
+        <% if flash.notice %>
+          <p class="flash"> <%= flash.notice %> </p>
+        <% end %>
+        <% if flash.alert %>
+            <%= raw "<script> alert('#{flash.alert}'); </script>" %>
+        <% end %>
+        <%= yield %>
+      </div>
+      
+    </div>
   </body>
 </html>

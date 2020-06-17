@@ -1,6 +1,8 @@
 class Author < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :articles
+
   # tell ActiveStorage that this object has images attached to it
   has_one_attached :avatar
   # specify which attachments are valid (could include other image types)

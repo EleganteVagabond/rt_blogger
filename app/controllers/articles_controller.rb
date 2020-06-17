@@ -11,15 +11,31 @@ class ArticlesController < ApplicationController
   before_action :require_login, except: [:index, :show]
   
   def index
-    @articles = Article.all
+    @articles = [] # Article.includes(:author).all
+  end
+
+  # returns a hash of hashes with articles first by year then by month
+  # newest first
+  def index_by_date
+    @articles = Article.includes(:author).order("created_at desc")
+    # hash (by year) of hash (by month) of array (of articles)
+    @article_by_year_hash = Hash.new {|h,k| h[k] = Hash.new {|h2,k2| h2[k2] = Array.new}}
+    @articles.each_with_object(@article_by_year_hash) {|article, hash| hash[article.created_at.year][article.created_at.month].push(article) }
+
+  end
+
+  def index_by_month
+    @articles = Article.preload(:author).find_by_month(params[:month_id].to_i)
+    flash.now.notice = @articles.empty?
   end
 
   def show
-    @article = Article.find(params[:id])
+    @article = Article.includes(:author).find(params[:id])
     # add a stub for a comment
     @comment = Comment.new
     # don't add to the Article.comments collection because that will trigger a save/insert
     @comment.article = @article
+    @article.increment_click_count
   end
 
   def new
@@ -30,6 +46,7 @@ class ArticlesController < ApplicationController
     # @article = Article.new(params[:article])
     # create and save/persist the article
     @article = Article.new(article_params)
+    @article.author=current_user
     @article.save
     # notify the user that it succeeded
     flash.notice= "Article '#{@article.title}' created. Good job, you!'"
@@ -48,6 +65,11 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    # we can either restrict access here or in the page
+    unless @article.author == current_user 
+      flash.alert = "You must be the original author to edit this article"
+      redirect_to request.referer
+    end
   end
   
   def update

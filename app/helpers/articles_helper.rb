@@ -5,7 +5,7 @@ module ArticlesHelper
   private
   def article_params
     # tag list is the set of tags (M2M) and image is the paperclip image file
-    params.require(:article).permit(:title,:body, :tag_list, :image)
+    params.require(:article).permit(:title,:body, :tag_list, :image, :author)
   end
 
 end

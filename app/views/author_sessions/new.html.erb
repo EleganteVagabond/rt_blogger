@@ -1,5 +1,5 @@
 <h1>Login</h1>
-
+<h2><%= session[:return_to_url] %> </h2>
 <%= form_tag author_sessions_path, method: :post do %>
   <div class="field">
     <%= label_tag :email %>

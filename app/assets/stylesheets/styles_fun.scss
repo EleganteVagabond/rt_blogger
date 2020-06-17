@@ -34,3 +34,22 @@ a {
   clear: both;
   padding-top: 20px;
 }
+
+#sidebar {
+    display: table;
+    width: 100%;
+}
+
+#navigation {
+    float: left;
+    width: 80%;
+}
+
+#auth {
+    float: left;
+    width: 20%;
+}
+
+.nested {
+    padding-left: 15px
+}

@@ -16,11 +16,12 @@ class TagsController < ApplicationController
     rescue ActiveRecord::RecordNotFound 
       @tag = nil
     end
-      unless @tag.nil?
-        @tag.taggings.each do |tagging| 
-          tagging.delete
-        end 
-        @tag.delete
+      # don't need this because we turned on the dependent: :destroy option
+      # unless @tag.nil?
+      #   @tag.taggings.each do |tagging| 
+      #     tagging.delete
+      #   end 
+        @tag.destroy
         @tag.save
         
         flash.success= "Tag '#{@article.title}' deleted (aka unTagged)"
